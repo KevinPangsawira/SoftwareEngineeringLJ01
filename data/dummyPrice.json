@@ -2,26 +2,44 @@
     {
         "id": 1,
         "name": "Beras",
-        "price": 12000
+        "price": 12000,
+        "unit": "kg",
+        "date": "2025-05-07"
+
     },
     {
         "id": 2,
-        "name": "Gula",
-        "price": 15000
+        "name": "Daging Sapi",
+        "price": 135000,
+        "unit": "kg",
+        "tanggal": "2025-05-07"
     },
     {
         "id": 3,
-        "name": "Minyak Goreng",
-        "price": 14000
+        "name": "Bawang Merah",
+        "price": 32000,
+        "unit": "kg",
+        "date": "2025-05-07"
     },
     {
         "id": 4,
-        "name": "Telur",
-        "price": 20000
+        "name": "Telur Ayam",
+        "price": 30000,
+        "unit": "kg",
+        "date": "2025-05-07"
     },
     {
         "id": 5,
-        "name": "Daging Sapi",
-        "price": 120000
+        "name": "Daging Ayam",
+        "price": 38000,
+        "unit": "kg",
+        "date": "2025-05-07"
+    }
+    {
+        "id": 6,
+        "name": "Bawang Putih",
+        "price": 34000,
+        "unit": "kg",
+        "date": "2025-05-07"
     }
 ]   
