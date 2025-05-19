@@ -12,5 +12,6 @@ app.get('/', (req, res) => {
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+    console.log(`Server is running at http://localhost:${port}`);  //Hasilnya bisa dilihat di http://localhost:3000/api/prices di postman berupa data JSON 
+    // setelah server di run
 });
