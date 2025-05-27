@@ -1,12 +1,21 @@
 const priceModel = require('../model/priceModel');
 
-const getPrices = (req, res) => {
-    const prices = priceModel.getAllPrices();
-    if (prices) {
-        res.status(200).json(prices);
-    } else {
-        res.status(500).json({ message: 'Error retrieving prices' });
-    }
-}
+const getPrices = async (req, res) => {
+  try {
+    const prices = await priceModel.getAllPrices();
+    res.status(200).json(prices);
+  } catch (error) {
+    res.status(500).json({ message: 'Gagal mengambil data harga', error: error.message });
+  }
+};
 
-module.exports = {getPrices};
+const addPrice = async (req, res) => {
+  try {
+    const newPrice = await priceModel.addPrice(req.body);
+    res.status(201).json(newPrice);
+  } catch (error) {
+    res.status(500).json({ message: 'Gagal menambahkan harga baru', error: error.message });
+  }
+};
+
+module.exports = {getPrices, addPrice};
