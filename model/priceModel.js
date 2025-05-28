@@ -1,6 +1,7 @@
 // const fs = require('fs').promises;
 // const path = require('path');
 // const filePath = path.join(__dirname, '../data/dummyPrice.json');
+
 const {connectDB, sql} = require('../config/db');
 
 const getAllPrices = async () => {
