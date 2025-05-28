@@ -1,11 +1,13 @@
-const fs = require('fs').promises;
-const path = require('path');
-const filePath = path.join(__dirname, '../data/dummyPrice.json');
+// const fs = require('fs').promises;
+// const path = require('path');
+// const filePath = path.join(__dirname, '../data/dummyPrice.json');
+const {connectDB, sql} = require('../config/db');
 
 const getAllPrices = async () => {
     try {
-        const data = await fs.readFile(filePath, 'utf8');
-        return JSON.parse(data);
+        const pool = await connectDB();
+        const result = await pool.request().query('SELECT * FROM BahanPokok');
+        return result.recordset;
     } catch (error) {
         console.error('Error reading prices file:', error);
         throw error;
@@ -14,20 +16,21 @@ const getAllPrices = async () => {
 
 const addPrice = async (newData) => {
   try{
-    const prices = await getAllPrices();
+    const pool = await connectDB();
+    const query = `
+      INSERT INTO BahanPokok (NamaBahan, HargaBahan, DateUp, imageLink)
+      OUTPUT INSERTED.*
+      VALUES (@name, @price, @date, @imageLink);
+    `;
 
-    const newPrice = {
-      id: prices.length + 1,
-      name: newData.name,
-      price: newData.price,
-      unit: newData.unit,
-      date: newData.date,
-    };
+    const result = await pool.request()
+      .input('name', sql.NVarChar, newData.name)
+      .input('price', sql.Float, newData.price)
+      .input('date', sql.DateTime, newData.date)
+      .input('imageLink', sql.NVarChar, newData.imageLink)
+      .query(query);
 
-    prices.push(newPrice);
-
-    await fs.writeFile(filePath, JSON.stringify(prices, null, 2), 'utf8');
-    return newPrice;
+      return result.recordset[0];
 
   } catch (error){
     console.error('Error adding new price:', error);
