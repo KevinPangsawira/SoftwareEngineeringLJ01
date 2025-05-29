@@ -1,11 +1,19 @@
 const userModel = require('../model/userModel');
 
 const registerUser = async (req, res) => {
-    if(!req.body.username || !req.body.email || !req.body.password || !req.body.role) {
-        return res.status(400).json({ message: 'Semua field harus diisi' });
-    }
+  if (!req.body.username || !req.body.email || !req.body.password || !req.body.role) {
+    return res.status(400).json({ message: 'Semua field harus diisi' });
+  }
 
-    try {
+  if (!req.body.email.endsWith('@gmail.com')) {
+    return res.status(400).json({ message: 'Email harus menggunakan @gmail.com' });
+  }
+
+  if (req.body.password.length < 8) {
+    return res.status(400).json({ message: 'Password minimal 8 karakter' });
+  }
+
+  try {
     const newUser = await userModel.addNewUser(req.body);
 
     return res.status(201).json({ message: 'Registrasi berhasil', user: newUser });
@@ -16,6 +24,18 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
+  if (!req.body.email || !req.body.password) {
+    return res.status(400).json({ message: 'Email dan password harus diisi' });
+  }
+
+  if (!req.body.email.endsWith('@gmail.com')) {
+    return res.status(400).json({ message: 'Email harus menggunakan @gmail.com' });
+  }
+
+  if (req.body.password.length < 8) {
+    return res.status(400).json({ message: 'Password minimal 8 karakter' });
+  }
+
   try {
     const user = await userModel.getUser(req.body.email, req.body.password);
 
