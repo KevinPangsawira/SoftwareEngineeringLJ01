@@ -11,8 +11,8 @@ function NavigationBar() {
             </nav>
 
             <nav>
-                <Link to="/SignUp" >Sign Up</Link>
-                <Link to="/Login" >Login</Link>
+                <Link to="/signup" >Sign Up</Link>
+                <Link to="/login" >Login</Link>
             </nav>
         </div>
     );

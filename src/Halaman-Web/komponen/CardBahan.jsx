@@ -21,8 +21,7 @@ const CardBahan = ({ item }) => {
           alignItems: "flex-end",
           position: "relative",
           filter: "brightness(90%)",
-          
-          position: "relative"
+     
         }}
       >
         <div
