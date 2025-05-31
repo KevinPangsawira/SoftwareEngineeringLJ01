@@ -1,9 +1,12 @@
 const express = require('express');
+const cors = require('cors');   
 const app = express();
+
+app.use(cors());                // pakai cors dulu sebelum route
+app.use(express.json());
+
 const priceRoutes = require('./routes/prices');
 const userRoutes = require('./routes/users');
-
-app.use(express.json());
 
 app.use('/api/prices', priceRoutes);
 app.use('/api/users', userRoutes);
