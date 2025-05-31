@@ -5,21 +5,28 @@ import Resep from './Halaman-Web/Resep';
 import ResepDetail from './Halaman-Web/komponen/ResepDetail';
 import Register from './Halaman-Web/Register';
 import Login from './Halaman-Web/Login';
+import { useState } from 'react';
+import AdminAdd from './Halaman-Web/AdminAdd';
+import AdminUpdate from './Halaman-Web/AdminUpdate';
 
 function App() {
+  const [user, setUser] = useState(null);
   return(
+    
     <>
         <BrowserRouter>
-            <NavigationBar />
-            <Routes>
-                <Route path='/' element={<Daftar />} ></Route>
-                <Route path='/daftar' element={<Daftar />} />
-                <Route path='/resep' element={<Resep />} />
-                <Route path="/resep/:id" element={<ResepDetail />} />
-                <Route path="/signup" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-            </Routes>
-        </BrowserRouter>
+        <NavigationBar user={user} setUser={setUser} /> 
+        <Routes>
+          <Route path='/' element={<Daftar />} />
+          <Route path='/daftar' element={<Daftar />} />
+          <Route path='/resep' element={<Resep />} />
+          <Route path="/resep/:id" element={<ResepDetail />} />
+          <Route path="/signup" element={<Register />} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route path="/add" element={<AdminAdd />} />
+          <Route path="/update" element={<AdminUpdate />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
