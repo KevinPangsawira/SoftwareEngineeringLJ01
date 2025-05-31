@@ -1,55 +1,88 @@
-import './Register.css'
+import { useState } from "react";
+import './Register.css';
+
 function Register() {
-    return (
-        <div
-            style={{
-                height: '100vh',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
-            <form className="registerFrame" style={{
-                height: '35vw',
-                width: '30vw',
-                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)'
-            }}>
-                <p style={{ fontSize: '45px', textAlign: 'center' }}>Sign Up</p>
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
 
-                <div className='textbox'>
-                    <label htmlFor="">Name</label>
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-                    <div>
-                        <input type="text" name="name" placeholder='Enter Name' id="name" />
-                        <hr />
-                    </div>
-                </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-                <div className='textbox'>
-                    <label htmlFor="">Email</label>
+    const response = await fetch("http://localhost:3000/api/users/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: form.name,
+        email: form.email,
+        password: form.password
+        // tidak perlu kirim role karena default di backend
+      }),
+    });
 
-                    <div>
-                        <input type="email" name="email" placeholder='Enter Email' id="email" />
-                        <hr />
-                    </div>
-                </div>
+    const data = await response.json();
 
-                <div className='textbox'>
-                    <label htmlFor="">Password</label>
+    if (response.ok) {
+      alert("Registrasi berhasil!");
+    } else {
+      alert(`Registrasi gagal: ${data.message}`);
+    }
+  };
 
-                    <div>
-                        <input type="password" name="password" placeholder='Enter Password' id="password" />
-                        <hr />
-                    </div>
-                </div>
+  return (
+    <div style={{
+      height: '100vh',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
+      <form className="registerFrame"
+        onSubmit={handleSubmit}
+        style={{
+          height: '35vw',
+          width: '30vw',
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)'
+        }}
+      >
+        <p style={{ fontSize: '45px', textAlign: 'center' }}>Sign Up</p>
 
-                <div className='footerRegister'>
-                    <button>Register</button>
-                    <p>Already have an account? Login</p>
-                </div>
-            </form>
+        <div className='textbox'>
+          <label htmlFor="name">Name</label>
+          <div>
+            <input type="text" name="name" placeholder='Enter Name' value={form.name} onChange={handleChange} />
+            <hr />
+          </div>
         </div>
-    );
+
+        <div className='textbox'>
+          <label htmlFor="email">Email</label>
+          <div>
+            <input type="email" name="email" placeholder='Enter Email' value={form.email} onChange={handleChange} />
+            <hr />
+          </div>
+        </div>
+
+        <div className='textbox'>
+          <label htmlFor="password">Password</label>
+          <div>
+            <input type="password" name="password" placeholder='Enter Password' value={form.password} onChange={handleChange} />
+            <hr />
+          </div>
+        </div>
+
+        <div className='footerRegister'>
+          <button type="submit">Register</button>
+          <p>Already have an account? Login</p>
+        </div>
+      </form>
+    </div>
+  );
 }
 
 export default Register;
