@@ -1,69 +1,83 @@
-import React from "react";
-import CardBahan from "./komponen/CardBahan";
-import beras from "../assets/beras.jpg";
-import ds from "../assets/ds.webp";
-const items = [
-  {
-    name: "Beras",
-    price: "Rp. 15.000 / kg",
-    updated: "7 Mei 2025",
-    image: beras, 
-  },
-  {
-    name: "Daging Sapi",
-    price: "Rp. 135.000 / kg",
-    updated: "7 Mei 2025",
-    image: ds,
-  },
-  {
-    name: "Bawang Merah",
-    price: "Rp. 32.000 / kg",
-    updated: "7 Mei 2025",
-    image: beras,
-  },
-  {
-    name: "Telur Ayam",
-    price: "Rp. 30.000 / kg",
-    updated: "7 Mei 2025",
-    image: ds,
-  },
-  {
-    name: "Daging Ayam",
-    price: "Rp. 38.000 / kg",
-    updated: "7 Mei 2025",
-    image: beras,
-  },
-  {
-    name: "Bawang Putih",
-    price: "Rp. 34.000 / kg",
-    updated: "7 Mei 2025",
-    image: ds,
-  },
-];
+  import React, { useEffect, useState } from "react";
+  import CardBahan from "./komponen/CardBahan";
 
-function Daftar() {
-  return (
-    <div
-      style={{
-        padding: "24px",
-        fontFamily: "sans-serif",
-        backgroundColor: "#f3f4f6",
-        minHeight: "100vh",
-      }}
-    >
+  function Daftar() {
+    const [items, setItems] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    useEffect(() => {
+      fetch("http://localhost:3000/api/prices")
+        .then((res) => res.json())
+        .then((data) => {
+          const mappedData = data.map((item) => ({
+            name: item.NamaBahan,
+            price: `Rp. ${item.HargaBahan.toLocaleString("id-ID")} / kg`,
+            updated: new Date(item.DateUp).toLocaleDateString("id-ID", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }),
+            image: item.imageLink,
+          }));
+          setItems(mappedData);
+        })
+        .catch((error) => console.error("Gagal fetch data:", error));
+    }, []);
+
+    // Filter berdasarkan input pencarian (tidak case sensitive)
+    const filteredItems = items.filter((item) =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    return (
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "24px",
+          padding: "24px",
+          fontFamily: "sans-serif",
+          backgroundColor: "#f3f4f6",
+          minHeight: "100vh",
         }}
       >
-        {items.map((item, index) => (
-          <CardBahan key={index} item={item} />
-        ))}
-      </div>
-    </div>
-  );
-}
+        <div style={{border: '1px solid transparent', display: "flex", flexDirection: 'column',  alignItems: "flex-end"}}>
+          <input
+            type="text"
+            placeholder="Cari bahan..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{
+              marginBottom: "20px",
+              padding: "10px",
+              width: "15%",
+              maxWidth: "400px",
+              borderRadius: "8px",
+              border: "1px solid transparent",
+              fontSize: "16px",
+              backgroundColor: "transparent",
+              borderBottom: "1px solid black"
+            }}
+          />
+          {/* <hr style={{width: '15.7%', marginBottom: '20px'}}/> */}
+        </div>
 
-export default Daftar;
+        <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+        gap: "24px",
+      }}
+    >
+          {filteredItems.length > 0 ? (
+            filteredItems.map((item, index) => (
+              <CardBahan key={index} item={item} />
+            ))
+          ) : (
+            <div style={{ gridColumn: "1/-1", textAlign: "center", fontSize: "18px" }}>
+              Tidak ditemukan bahan yang cocok.
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  export default Daftar;
