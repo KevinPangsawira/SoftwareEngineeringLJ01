@@ -1,14 +1,19 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
+
+app.use(cors());
+app.use(express.json());
+
 const priceRoutes = require('./routes/prices');
 const userRoutes = require('./routes/users');
 const resepRoutes = require('./routes/resep');
-
-app.use(express.json());
+const pengeluaranRoutes = require('./routes/pengeluaran');
 
 app.use('/api/prices', priceRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/resep', resepRoutes);
+app.use('/api/pengeluaran', pengeluaranRoutes);
 
 app.get('/', (req, res) => {
     res.send('API is running....');
