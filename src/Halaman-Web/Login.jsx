@@ -33,7 +33,7 @@ function Login({ setUser }) {
     return (
         <div style={{ height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <form className="loginFrame" onSubmit={handleSubmit} style={{ height: '25vw', width: '30vw', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>
-                <p style={{ fontSize: '45px', textAlign: 'center' }}>Login</p>
+                <p style={{ fontSize: '45px', textAlign: 'center', marginTop: "20px" }}>Login</p>
                 <div className='textbox'>
                     <label>Email</label>
                     <div>

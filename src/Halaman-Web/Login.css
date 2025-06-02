@@ -1,6 +1,7 @@
 *{
     color: #2E6DB5;
     font-size: 25px;
+    
 }
 
 hr{
@@ -15,6 +16,7 @@ input{
     border: 1px solid white;
     color: black;
     margin-top: 20px;
+    background-color: transparent;
     
 }
 input:focus {
@@ -52,4 +54,5 @@ div.footerRegister button{
     color: white;
     width: 100px;
     cursor: pointer;
+    height: 40px;
 }

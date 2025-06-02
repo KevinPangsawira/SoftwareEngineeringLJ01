@@ -2,7 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1f2937;
+  /* background-color: #1f2937; */
+  background-color: transparent;
   padding: 10px 20px;
 }
 
@@ -13,7 +14,7 @@
 }
 
 .container nav a {
-  color: white;
+  color: rgb(3, 31, 62);
   text-decoration: none;
   font-weight: bold;
   padding: 5px 10px;
@@ -21,5 +22,5 @@
 }
 
 .container nav a:hover {
-  background-color: #374151;
+  color: rgb(19, 180, 86);
 }

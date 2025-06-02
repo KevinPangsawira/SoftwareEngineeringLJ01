@@ -25,8 +25,10 @@ function NavigationBar({ user, setUser }) {
       <nav>
         {user ? (
           <>
-            <span style={{ fontWeight: 'bold', color: 'white' }}>{user.UserName}</span>
-            <button onClick={() => setUser(null)}>Logout</button>
+            <span style={{ fontWeight: 'bold' }}>{user.UserName}</span>
+            <button onClick={() => setUser(null)} style={{
+              borderRadius:'10px', fontSize: '15px', cursor:'pointer'
+            }}>Logout</button>
           </>
         ) : (
           <>

@@ -1,45 +1,53 @@
-import './ResepDetail.css';
-import { useParams } from 'react-router-dom';
-
-// Detail data
-const resepData = {
-  "nasi-goreng": {
-    gambar: "/Pics/Nasi-Goreng.jpg",
-    judul: "Nasi Goreng Spesial",
-    deskripsi: "Nasi goreng dengan telur, ayam suwir, dan bumbu khas Indonesia. Tambahkan acar dan kerupuk sebagai pelengkap."
-  },
-  "nasi-hainam": {
-    gambar: "/Pics/Nasi-Hainam.jpeg",
-    judul: "Nasi Hainam",
-    deskripsi: "Nasi gurih dimasak dengan kaldu ayam, disajikan dengan ayam rebus dan saus jahe-kecap."
-  },
-  "sapi-lada-hitam": {
-    gambar: "/Pics/Sapi-Lada-Hitam.jpg",
-    judul: "Sapi Lada Hitam",
-    deskripsi: "Wuenak rek"
-  }
-};
-
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import "./ResepDetail.css";
 
 function ResepDetail() {
-    // Ambil id dari URL
-    const { id } = useParams();
+  const { id } = useParams();
+  const [resep, setResep] = useState(null);
 
-    // Ambil data sesuai id resep
-    const resep = resepData[id];
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/resep/${id}`)
+      .then((res) => res.json())
+      .then((data) => setResep(data))
+      .catch((error) => {
+        console.error("Gagal memuat detail resep:", error);
+      });
+  }, [id]);
 
-    // Kalo ga nemu
-    if (!resep) {
-        return <p>Resep tidak ditemukan</p>;
-    }
+  if (!resep) return <p>Loading...</p>;
 
-    // Kalo nemu
-    return (
-        <div className="detail-container">
-        <img src={resep.gambar} alt={resep.judul} className="detail-img" />
-        <h2 className="detail-title">{resep.judul}</h2>
-        <p className="detail-desc">{resep.deskripsi}</p>
-        </div>
+  return (
+    <div style={{ padding: '20px', color: '#333' }}>
+      <h2>{resep.ResepName}</h2>
+      <img
+        src={resep.images}
+        alt={resep.ResepName}
+        style={{ maxWidth: '400px', borderRadius: '12px' }}
+      />
+      <p><strong>Deskripsi:</strong> {resep.deskripsi}</p>
+
+      <p><strong>Langkah-langkah:</strong></p>
+      <p>
+        {resep.langkah.split("\\n").map((line, index) => (
+          <span key={index}>
+            {line}
+            <br />
+          </span>
+        ))}
+      </p>
+
+      <p><strong>Total Harga:</strong> Rp{resep.totalHarga.toLocaleString("id-ID")}</p>
+
+      <p><strong>Bahan-bahan:</strong></p>
+      <ul>
+        {resep.bahan.map((item, index) => (
+          <li key={index}>
+            {item.NamaBahan} — {item.quantity}x
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

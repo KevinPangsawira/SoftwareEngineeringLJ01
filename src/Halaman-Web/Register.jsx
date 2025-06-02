@@ -45,12 +45,12 @@ function Register() {
       <form className="registerFrame"
         onSubmit={handleSubmit}
         style={{
-          height: '35vw',
+          height: '30vw',
           width: '30vw',
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)'
         }}
       >
-        <p style={{ fontSize: '45px', textAlign: 'center' }}>Sign Up</p>
+        <p style={{ fontSize: '45px', textAlign: 'center', marginTop: "35px"}}>Sign Up</p>
 
         <div className='textbox'>
           <label htmlFor="name">Name</label>
