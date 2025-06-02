@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "./ResepCard.css";
 
 // Receive data from Resep.jsx -> {id} , {gambar} , {deskripsi}
-function ResepCard({id , gambar , deskripsi}) {
+function ResepCard({id , gambar , deskripsi, harga}) {
     return (
         // Each card have a page -> {id}
         <Link to={`/resep/${id}`} className="card-link">
@@ -10,6 +10,7 @@ function ResepCard({id , gambar , deskripsi}) {
             <div className="card">
                 <img src={gambar} alt="resep" className="card-img" ></img>
                 <p className="card-desc" >{deskripsi}</p>
+                <p className="card-desc" >{harga}</p>
             </div>
         </Link>
     );

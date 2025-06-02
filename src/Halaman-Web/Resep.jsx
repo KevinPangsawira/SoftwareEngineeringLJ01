@@ -7,6 +7,10 @@ function Resep() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const carouselRef = useRef(null);
     const [currentBg, setCurrentBg] = useState(0);
+    const [budget, setBudget] = useState(0);
+    const [stokBahan, setStokBahan] = useState("");
+    const [filteredReseps, setFilteredReseps] = useState([]);
+    const [showFilter, setShowFilter] = useState(false); // ← kontrol visibilitas input filter
 
     const backgroundImages = [
         "../src/assets/pngtree-person-cooking-at-the-kitchen-counter-picture-image_2625819.jpg",
@@ -29,7 +33,7 @@ function Resep() {
 
     const scrollToIndex = (index) => {
         const carousel = carouselRef.current;
-        const cardWidth = 500; 
+        const cardWidth = 500;
         const scrollPosition = index * cardWidth - (carousel.offsetWidth / 2 - cardWidth / 2);
         carousel.scrollTo({ left: scrollPosition, behavior: "smooth" });
         setCurrentIndex(index);
@@ -43,6 +47,30 @@ function Resep() {
         if (currentIndex > 0) scrollToIndex(currentIndex - 1);
     };
 
+    const filterReseps = () => {
+        // jika tidak ada input filter, tampilkan semua resep
+        if (budget === 0 && stokBahan.trim() === "") {
+            setFilteredReseps([]);
+            return;
+        }
+
+        const bahanList = stokBahan.split(',').map(b => b.trim().toLowerCase());
+
+        const filtered = reseps.filter((resep) => {
+            const cocokBudget = budget === 0 || resep.TotalHarga <= budget;
+            const cocokBahan =
+                stokBahan === "" || resep.bahan?.some(b => bahanList.includes(b.toLowerCase()));
+            return cocokBudget && cocokBahan;
+        });
+
+        setFilteredReseps(filtered);
+    }; 
+    
+    useEffect(() => {
+        filterReseps();
+    }, [budget, stokBahan]);
+
+    const dataToShow = filteredReseps.length > 0 ? filteredReseps : reseps;
 
     return (
         <div>
@@ -59,12 +87,46 @@ function Resep() {
                 </div>
             </div>
 
+            <div className="filter-container">
+                <button onClick={() => setShowFilter(!showFilter)}>
+                    {showFilter ? "Tutup Filter" : "Filter"}
+                </button>
+
+                {showFilter && (
+                    <div className="filter-inputs">
+                        <label>
+                            Budget Harian (Rp):
+                            <input
+                                type="range"
+                                min="0"
+                                max="100000"
+                                step="1000"
+                                value={budget}
+                                onChange={(e) => setBudget(Number(e.target.value))}
+                            />
+                            <span>Rp {budget}</span>
+                        </label>
+
+                        <label>
+                            Bahan Tersedia (pisahkan dengan koma):
+                            <input
+                                type="text"
+                                value={stokBahan}
+                                onChange={(e) => setStokBahan(e.target.value)}
+                                placeholder="contoh: telur, bayam"
+                            />
+                        </label>
+
+                        <button onClick={filterReseps}>Terapkan Filter</button>
+                    </div>
+                )}
+            </div>
+
             <div className="carousel-container">
                 <button className="nav-button left" onClick={handlePrev}>←</button>
 
-                <div className="carousel-track" ref={carouselRef}  >
-                    {reseps.map((resep, index) => {
-                        // Hitung posisi relatif ke item tengah
+                <div className="carousel-track" ref={carouselRef}>
+                    {dataToShow.map((resep, index) => {
                         const distanceFromCenter = Math.abs(index - currentIndex);
                         const scale = Math.max(1 - distanceFromCenter * 0.1, 0.8);
                         const opacity = Math.max(1 - distanceFromCenter * 0.3, 0.4);
@@ -83,6 +145,7 @@ function Resep() {
                                     id={resep.ResepID}
                                     gambar={resep.images}
                                     deskripsi={resep.ResepName}
+                                    harga={resep.TotalHarga}
                                 />
                             </div>
                         );
