@@ -29,7 +29,16 @@ const getCart = async (userId) => {
             WHERE c.UserID = @userId
         `);
 
-    return result.recordset;
+    let total = 0;
+
+    result.recordset.forEach(item => {
+        total += item.subtotal;
+    });
+
+    return {
+        items: result.recordset,
+        total: total
+    };
 };
 
 const removeItem = async (userId, bahanId) => {
