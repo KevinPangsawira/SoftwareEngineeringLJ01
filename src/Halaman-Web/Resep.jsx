@@ -64,8 +64,8 @@ function Resep() {
         });
 
         setFilteredReseps(filtered);
-    }; 
-    
+    };
+
     useEffect(() => {
         filterReseps();
     }, [budget, stokBahan]);
@@ -93,21 +93,24 @@ function Resep() {
                 </button>
 
                 {showFilter && (
-                    <div className="filter-inputs">
+                    <div className="filter-inputs" style={{fontFamily: "sans-serif"}}>
                         <label>
                             Budget Harian (Rp):
-                            <input
-                                type="range"
-                                min="0"
-                                max="100000"
-                                step="1000"
+                            <select
                                 value={budget}
                                 onChange={(e) => setBudget(Number(e.target.value))}
-                            />
-                            <span>Rp {budget}</span>
+                            >
+                                <option value={0}>Semua</option>
+                                <option value={10000}>&lt;Rp. 10.000</option>
+                                <option value={15000}>&lt;Rp. 15.000</option>
+                                <option value={20000}>&lt;Rp. 20.000</option>
+                                <option value={50000}>&lt;Rp. 50.000</option>
+                                <option value={100000}>&lt;Rp. 100.000</option>
+                            </select>
                         </label>
 
-                        <label>
+
+                        {/* <label>
                             Bahan Tersedia (pisahkan dengan koma):
                             <input
                                 type="text"
@@ -115,9 +118,9 @@ function Resep() {
                                 onChange={(e) => setStokBahan(e.target.value)}
                                 placeholder="contoh: telur, bayam"
                             />
-                        </label>
+                        </label> */}
 
-                        <button onClick={filterReseps}>Terapkan Filter</button>
+                        {/* <button onClick={filterReseps}>Terapkan Filter</button> */}
                     </div>
                 )}
             </div>
