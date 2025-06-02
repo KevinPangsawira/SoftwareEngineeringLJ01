@@ -18,6 +18,7 @@
   "homepage": "https://github.com/jefgabb/test#readme",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "mssql": "^11.0.1"
   }
