@@ -1,8 +1,10 @@
 const express = require('express');
-const cors = require('cors');
+
+const cors = require('cors');   
 const app = express();
 
-app.use(cors());
+app.use(cors());                // pakai cors dulu sebelum route
+
 app.use(express.json());
 
 const priceRoutes = require('./routes/prices');

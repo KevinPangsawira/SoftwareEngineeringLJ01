@@ -1,14 +1,15 @@
 const sql = require('mssql');
 
 const dbConfig = {
-    user: 'user123',
-    password: 'abcd123!',
-    server: 'LAPTOP-J3A9TJMS',
+    user: 'user321',
+    password: 'user123',
+    server: 'localhost',
     database: 'bahan_makanan_SE',
     options: {
         encrypt: true,
-        trustServerCertificate: true
-    }
+        trustServerCertificate: true,
+    },
+    port: 1433
 };
 
 async function connectDB() {
@@ -22,4 +23,4 @@ async function connectDB() {
     }
 }
 
-module.exports = {sql,connectDB};
+module.exports = { sql, connectDB };
