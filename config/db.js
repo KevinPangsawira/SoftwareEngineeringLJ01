@@ -1,9 +1,10 @@
+require('dotenv').config();
 const sql = require('mssql');
 
 const dbConfig = {
-    user: 'user321',
-    password: 'user123',
-    server: 'localhost',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    server: process.env.DB_SERVER,
     database: 'bahan_makanan_SE',
     options: {
         encrypt: true,
