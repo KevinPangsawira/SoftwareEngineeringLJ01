@@ -1,14 +1,10 @@
-// const fs = require('fs').promises;
-// const path = require('path');
-// const filePath = path.join(__dirname, '../data/dummyPrice.json');
-
 const {connectDB, sql} = require('../config/db');
 
 //halaman resep
 const getAllResep = async () => {
     try {
         const pool = await connectDB();
-        const result = await pool.request().query('SELECT ResepID, ResepName, images FROM Resep');
+        const result = await pool.request().query('SELECT ResepID, ResepName, images, TotalHarga FROM Resep');
         return result.recordset;
     } catch (error) {
         console.error('Error reading resep:', error);
@@ -16,16 +12,41 @@ const getAllResep = async () => {
     }
 };
 
-
 //pas dipencet gambar resep
 const getResepbyID = async (id) => {
   try{
     const pool = await connectDB();
+    const query = `
+      SELECT r.ResepID, r.ResepName, r.deskripsi, r.langkah, r.images, r.totalHarga,
+      rb.BahanID, rb.quantity, b.NamaBahan
+      FROM Resep r
+      JOIN ResepBahan rb ON r.ResepID = rb.ResepID
+      JOIN BahanPokok b ON rb.BahanID = b.BahanID
+      WHERE r.ResepID = @id
+    `;
     const result = await pool.request()
       .input('id', sql.Int, id)
-      .query('SELECT * FROM Resep WHERE ResepID = @id');
+      .query(query);
 
-      return result.recordset[0];
+      const row = result.recordset;
+
+      if (row.length === 0) return null;
+
+      const map = {
+        ResepID: row[0].ResepID,
+        ResepName: row[0].ResepName,
+        deskripsi: row[0].deskripsi,
+        langkah: row[0].langkah,
+        images: row[0].images,
+        totalHarga: row[0].totalHarga,
+        bahan: row.map(item => ({
+          BahanID: item.BahanID,
+          NamaBahan: item.NamaBahan,
+          quantity: item.quantity
+        }))
+      };
+
+      return map;
 
   } catch (error){
     console.error('Error fetching resep by id:', error);
