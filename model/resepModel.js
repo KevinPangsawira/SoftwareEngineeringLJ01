@@ -54,21 +54,26 @@ const getResepbyID = async (id) => {
   }
 };
 
+
 //filter dari bahan yang user punya
-const filterBahan = async(bahanId) => {
+const filterBahan = async(NamaBahan) => {
   try {
     const pool = await connectDB();
+    const map = NamaBahan.map((_, i) => `@bahan${i}`).join(', ')
     const query = `
-      SELECT r.ResepID, r.ResepName, r.images
+      SELECT DISTINCT r.ResepID, r.ResepName, r.images
       FROM Resep r
-      WHERE NOT EXISTS (
-        SELECT 1 
-        FROM ResepBahan rb 
-        WHERE rb.ResepID = r.ResepID 
-        AND rb.BahanID NOT IN (${bahanId.join(',')})
-      )
+      JOIN ResepBahan rb ON r.ResepID = rb.ResepID
+      JOIN BahanPokok bp ON rb.BahanID = bp.BahanID
+      WHERE bp.NamaBahan IN (${map})
     `;
-    const result = await pool.request().query(query);
+    
+    const request = pool.request();
+    NamaBahan.forEach((nama, i) => {
+      request.input(`bahan${i}`, sql.NVarChar, nama);
+    });
+
+    const result = await request.query(query);
     
     return result.recordset;
 

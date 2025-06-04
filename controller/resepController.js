@@ -22,14 +22,14 @@ const getDetailResep = async (req, res) => {
 };
 
 const filterbyBahan = async (req, res) => {
-  const { bahanId } = req.body;
+  const { NamaBahan } = req.body;
 
-  if(!Array.isArray(bahanId) || bahanId.length === 0) {
+  if(!Array.isArray(NamaBahan) || NamaBahan.length === 0) {
     return res.status(400).json({ message: 'Bahan yang dimiliki harus diisi' });
   }
 
   try {
-    const filteredResep = await resepModel.filterBahan(bahanId);
+    const filteredResep = await resepModel.filterBahan(NamaBahan);
     res.status(200).json(filteredResep);
   } catch (error) {
     res.status(500).json({ message: 'Gagal memfilter resep berdasarkan bahan', error: error.message });
