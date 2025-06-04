@@ -97,8 +97,8 @@ const filterHarga = async(key) =>{
   try {
     const pool = await connectDB();
     const query = `
-      SELECT ResepID, ResepName, images
-      FROM Resep
+      SELECT r.ResepID, r.ResepName, r.images, r.TotalHarga
+      FROM Resep r
       WHERE TotalHarga <= @max
     `;
 
