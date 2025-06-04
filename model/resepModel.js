@@ -61,13 +61,13 @@ const filterBahan = async(NamaBahan) => {
     const pool = await connectDB();
     const map = NamaBahan.map((_, i) => `@bahan${i}`).join(', ')
     const query = `
-      SELECT DISTINCT r.ResepID, r.ResepName, r.images
+      SELECT DISTINCT r.ResepID, r.ResepName, r.images, r.TotalHarga
       FROM Resep r
       JOIN ResepBahan rb ON r.ResepID = rb.ResepID
       JOIN BahanPokok bp ON rb.BahanID = bp.BahanID
       WHERE bp.NamaBahan IN (${map})
     `;
-    
+
     const request = pool.request();
     NamaBahan.forEach((nama, i) => {
       request.input(`bahan${i}`, sql.NVarChar, nama);
@@ -85,31 +85,24 @@ const filterBahan = async(NamaBahan) => {
 
 //filter dari range harga
 const filterHarga = async(key) =>{
-  let min = 0;
   let max = 100000;
 
-  if(key === 'below50') max = 50000;
+  if(key === '<10') max = 10000;
 
-  else if(key === '50to75'){
-    min = 50000;
-    max = 75000;
-  }
+  else if(key === '<20') max = 20000;
 
-  else if(key === '75to100'){
-    min = 75000;
-    max = 100000;
-  }
+  else if(key === '<35') max = 35000;
+
 
   try {
     const pool = await connectDB();
     const query = `
       SELECT ResepID, ResepName, images
       FROM Resep
-      WHERE TotalHarga BETWEEN @min AND @max
+      WHERE TotalHarga <= @max
     `;
 
     const result = await pool.request()
-      .input('min', sql.Int, min)
       .input('max', sql.Int, max)
       .query(query);
 
