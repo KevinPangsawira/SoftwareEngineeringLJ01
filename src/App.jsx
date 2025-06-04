@@ -8,6 +8,7 @@ import Login from './Halaman-Web/Login';
 import { useState } from 'react';
 import AdminAdd from './Halaman-Web/AdminAdd';
 import AdminUpdate from './Halaman-Web/AdminUpdate';
+import Pengeluaran from './Halaman-Web/Pengeluaran';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -23,6 +24,7 @@ function App() {
           <Route path="/resep/:id" element={<ResepDetail />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
+           <Route path="/pengeluaran" element={<Pengeluaran user={user} />} />
           <Route path="/add" element={<AdminAdd />} />
           <Route path="/update" element={<AdminUpdate />} />
         </Routes>

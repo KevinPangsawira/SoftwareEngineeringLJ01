@@ -10,7 +10,7 @@ function ResepCard({id , gambar , deskripsi, harga}) {
             <div className="card">
                 <img src={gambar} alt="resep" className="card-img" ></img>
                 <p className="card-desc" >{deskripsi}</p>
-                <p className="card-desc" >{harga}</p>
+                <p className="card-desc" >Rp {harga !== undefined ? harga.toLocaleString() : '-'}</p>
             </div>
         </Link>
     );

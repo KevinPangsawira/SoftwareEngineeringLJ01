@@ -15,35 +15,35 @@ function ResepDetail() {
       });
   }, [id]);
 
-  if (!resep) return <p>Loading...</p>;
+  if (!resep) return <p className="loading-text">Loading...</p>;
 
   return (
-    <div style={{ padding: '20px', color: '#333' }}>
-      <h2>{resep.ResepName}</h2>
+    <div className="detail-container">
+      <h2 className="detail-title">{resep.ResepName}</h2>
       <img
         src={resep.images}
         alt={resep.ResepName}
-        style={{ maxWidth: '400px', borderRadius: '12px' }}
+        className="detail-img"
       />
-      <p><strong>Deskripsi:</strong> {resep.deskripsi}</p>
 
-      <p><strong>Langkah-langkah:</strong></p>
-      <p>
+      <p className="detail-section"><strong>Deskripsi:</strong></p>
+      <p className="detail-desc">{resep.deskripsi}</p>
+
+      <p className="detail-section"><strong>Langkah-langkah:</strong></p>
+      <ol className="detail-steps">
         {resep.langkah.split("\\n").map((line, index) => (
-          <span key={index}>
-            {line}
-            <br />
-          </span>
+          <li key={index}>{line.replace(/^\d+\.\s*/, '')}</li>
         ))}
-      </p>
+      </ol>
 
-      <p><strong>Total Harga:</strong> Rp{resep.totalHarga.toLocaleString("id-ID")}</p>
+      <p className="detail-section"><strong>Total Harga:</strong> Rp{resep.totalHarga.toLocaleString("id-ID")}</p>
 
-      <p><strong>Bahan-bahan:</strong></p>
-      <ul>
+      <p className="detail-section"><strong>Bahan-bahan:</strong></p>
+      <ul className="detail-bahan">
         {resep.bahan.map((item, index) => (
           <li key={index}>
-            {item.NamaBahan} — {item.quantity}x
+            <span className="bahan-nama">{item.NamaBahan}</span>
+            <span className="bahan-jumlah">{item.quantity}x</span>
           </li>
         ))}
       </ul>

@@ -1,33 +1,114 @@
+/* Global style */
+body {
+  /* background: linear-gradient(135deg, #fff4ec, #ffe6e6); */
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 
 .detail-container {
   max-width: 800px;
   margin: 40px auto;
-  padding: 20px;
-  background-color: #fefefe;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  font-family: Arial, sans-serif;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in;
+  color: #333;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
+/* Judul resep */
+.detail-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Gambar resep */
 .detail-img {
   width: 100%;
   max-height: 400px;
   object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  border: 3px solid #ccc;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  /* border: 4px solid #ffc4c4; */
+  transition: transform 0.3s ease;
 }
 
-
-.detail-title {
-  font-size: 28px;
-  margin-bottom: 10px;
-  color: #1f2937;
+.detail-img:hover {
+  transform: scale(1.03);
 }
+
+.detail-section {
+  font-size: 26px;
+  /* font-weight: bold; */
+  color: rgb(207, 114, 114);
+  margin-top: 25px;
+  margin-bottom: 5px;
+}
+
 
 .detail-desc {
-  font-size: 16px;
+  font-size: 26px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.detail-steps {
+  padding-left: 20px;
+  margin-top: 10px;
   color: #333;
-  line-height: 1.6;
+}
+
+.detail-steps li {
+  margin-bottom: 10px;
+  /* background-color: #fff5f2; */
+  padding: 10px 15px;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.detail-steps li:hover {
+  background-color: #d0d0d0;
+}
+
+.detail-bahan {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.detail-bahan li {
+  display: flex;
+  justify-content: space-between;
+  /* background-color: #fdf3f0; */
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.bahan-nama {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.bahan-jumlah {
+  color: #888;
+}
+
+/* Loading text */
+.loading-text {
+  text-align: center;
+  font-size: 18px;
+  color: #999;
+  margin-top: 50px;
 }

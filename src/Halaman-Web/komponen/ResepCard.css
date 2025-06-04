@@ -1,14 +1,17 @@
 /* Card -> Pembungkus */
 .card {
-  margin: 15px;
+  margin: 10px;
   /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
   border-radius: 8px;
   padding: 12px;
   width: 300px;
+  /* height: 270px; */
   text-align: center;
   background-color: #f9f9f9;
-   position: relative;     /* supaya bisa jadi acuan positioning anak */
-  overflow: visible;      /* biar gambar bisa keluar dari batas card */
+   position: relative;     
+  overflow: visible;      
   /* padding-top: 40px;    */
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
 }
@@ -23,7 +26,8 @@
     box-shadow: 10px 6px 15px rgba(0, 0, 0, 0.2);
     position: relative;
     top: -50px; 
-}
+  }
+
 
 /* Deskripsi dalam card */
 .card-desc {
@@ -32,6 +36,9 @@
   font-weight: bold;
   text-align: left;
   color: black;
+  position: relative;
+  top: -15px
+  /* border: 1px solid; */
 }
 
 /* Wipe <Link> decoration */

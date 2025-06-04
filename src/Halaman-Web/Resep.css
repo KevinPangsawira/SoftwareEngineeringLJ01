@@ -1,4 +1,4 @@
-.hero-section {
+.resepContainer {
   height: 600px;
   background-size: cover;
   background-position: center;
@@ -16,15 +16,20 @@
   position: absolute;
   top: 0;
   left: 0;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  
 }
 
 .hero-title {
   position: relative;
-  color: white;
+  color: rgb(177, 177, 177);
   font-size: 2.5rem;
   z-index: 1;
   text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  margin-bottom: 60px;
 }
 
 .resep-container {
@@ -81,20 +86,22 @@
 
 .nav-button {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(57, 57, 57, 0.9);
   border: none;
   font-size: 2rem;
-  padding: 6px 14px;
+  padding: 6px 12px;
   cursor: pointer;
-  z-index: 10;
+  z-index: 1;
   top: 50%;
   transform: translateY(-50%);
   border-radius: 50%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: white;
 }
 
 .nav-button.left {
   left: 10px;
+
 }
 
 .nav-button.right {
@@ -102,5 +109,64 @@
 }
 
 .nav-button:hover {
-  background-color: white;
+  background-color: rgba(101, 100, 100, 0.9);
+}
+
+
+.filter-container {
+  text-align: start;
+  margin-top: 1rem;
+  margin-left: 30px;
+  /* display: flex;
+  justify-content: flex-start;
+  margin-right: 50px; */
+  /* border: 1px solid; */
+}
+
+.filter-container button {
+  padding: 0.5rem 1.5rem;
+  background-color: #2e7d32;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  /* margin-bottom: 1rem; */
+  transition: background-color 0.3s ease;
+}
+
+.filter-container button:hover {
+  background-color: #1b5e20;
+}
+
+.filter-inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+  /* border: 10px solid; */
+  background-color: #cbccca;
+  padding: 1rem 2rem;
+  margin: 0 auto 2rem;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-inputs label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 0.95rem;
+  width: 100%;
+  color: #2e7d32;
+}
+
+.filter-inputs select,
+.filter-inputs input {
+  padding: 0.5rem;
+  border: 1px solid #c8e6c9;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 1rem;
 }

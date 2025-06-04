@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-
-function Login({ setUser }) {
+import { useUser } from './UserContext';
+function Login() {
     const [form, setForm] = useState({ email: '', password: '' });
     const navigate = useNavigate();
-
+    const { setUser } = useUser(); 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -21,7 +21,7 @@ function Login({ setUser }) {
 
         const data = await response.json();
 
-        if (response.ok) {
+        if (response.ok) { console.log('User dari login:', data.user);
             alert("Login berhasil!");
             setUser(data.user);
             navigate('/');

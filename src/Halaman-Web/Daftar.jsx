@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import CardBahan from "./komponen/CardBahan";
 import "./Daftar.css";
+import { useUser } from "./UserContext"; // ⬅️ tambahkan ini
+
 function Daftar() {
+  const { user } = useUser(); // ⬅️ cek login
+   console.log('User di Daftar:', user);
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -10,6 +14,7 @@ function Daftar() {
       .then((res) => res.json())
       .then((data) => {
         const mappedData = data.map((item) => ({
+          bahanId: item.BahanID,
           name: item.NamaBahan,
           price: `Rp. ${item.HargaBahan.toLocaleString("id-ID")} / kg`,
           updated: new Date(item.DateUp).toLocaleDateString("id-ID", {
@@ -24,23 +29,13 @@ function Daftar() {
       .catch((error) => console.error("Gagal fetch data:", error));
   }, []);
 
-  // Filter berdasarkan input pencarian 
   const filteredItems = items.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div
-      style={{
-        padding: "24px",
-        fontFamily: "sans-serif",
-        // backgroundColor: "#f3f4f6",
-        minHeight: "100vh",
-        
-        
-      }}
-    >
-      <div style={{ border: '1px solid transparent', display: "flex", flexDirection: 'column', alignItems: "flex-end" }}>
+    <div style={{ padding: "24px", fontFamily: "sans-serif", minHeight: "100vh" }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
         <input
           type="text"
           placeholder="Cari bahan..."
@@ -56,10 +51,9 @@ function Daftar() {
             fontSize: "20px",
             backgroundColor: "transparent",
             borderBottom: "1px solid black",
-            color: "white"
+            color: "black"
           }}
         />
-        {/* <hr style={{width: '15.7%', marginBottom: '20px'}}/> */}
       </div>
 
       <div
@@ -71,7 +65,7 @@ function Daftar() {
       >
         {filteredItems.length > 0 ? (
           filteredItems.map((item, index) => (
-            <CardBahan key={index} item={item} />
+            <CardBahan key={index} item={item} isLoggedIn={!!user} userId={user?.UserID} bahanId={item.bahanId} />
           ))
         ) : (
           <div style={{ gridColumn: "1/-1", textAlign: "center", fontSize: "18px" }}>
