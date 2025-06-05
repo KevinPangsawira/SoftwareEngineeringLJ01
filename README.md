@@ -1,3 +1,4 @@
+(Penting: Script database yang dijalankan adalah yang ada di branch main, bukan yang berada di branch backend, pastikan semuanya berjalan dengan lancar dan database di-create dengan benar.)
 Repositori ini berisi source code untuk aplikasi fullstack yang terdiri dari dua bagian utama:
 
 - 🎨 **Frontend** – terdapat pada branch `Front-End`
@@ -20,6 +21,7 @@ Untuk menjalankan backend, bisa menggunkan command "node server" dan pastikan su
 
 Untuk di sql server yang digunakan, pastikan authenticationnya menggunakan SQL Server Authentication
 Lalu buat new Logins, lalu sesuaikan dengan isi dari file .env di backend.
+
 
 Untuk melakukan login pada frontend sebagai:
 Customer:
