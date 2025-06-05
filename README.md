@@ -18,3 +18,11 @@ Untuk backend, Buat file .env di root folder backend, lalu isi sesuai konfiguras
 Untuk menjalankan frontend, bisa menggunakan command "npm run dev" dan pastikan sudah meng-install dependencies yang diperlukan dengan menjalankan "npm install"
 Untuk menjalankan backend, bisa menggunkan command "node server" dan pastikan sudah meng-install dependencies yang diperlukan menjalankan "npm install"
 
+Untuk melakukan login pada frontend sebagai:
+Customer:
+email: kevin@gmail.com
+password: kevin123
+Admin:
+email: admin@gmail.com
+password: admin123
+
