@@ -8,14 +8,10 @@ Untuk menjalankan projek ini: (Pastikan bukan dari branch main harus pindah bran
 Pertama, pindah ke branch Front-End untuk clone code Frontend
 Kedua, prindah ke branch backend untuk clone code Backend
 Untuk backend, Buat file .env di root folder backend, lalu isi sesuai konfigurasi lokal. Contoh:
-                          env
-                          Copy
-                          Edit
-                          PORT=5000
-                          DB_HOST=localhost
-                          DB_USER=root
-                          DB_PASS=password_kamu
-                          DB_NAME=nama_database
+                          DB_USER=user321
+                          DB_PASS=user123
+                          DB_NAME=bahan_makanan_SE
+                          DB_SERVER=LAPTOP-1234567
 Untuk menjalankan frontend, pertama install dulu vite dengan command "npm install vite", setelah itu bisa menggunakan command "npm run dev" untuk menjalankan website dan pastikan sudah meng-install dependencies yang diperlukan dengan menjalankan "npm install"
 Untuk menjalankan backend, bisa menggunkan command "node server" dan pastikan sudah meng-install dependencies yang diperlukan menjalankan "npm install"
 
